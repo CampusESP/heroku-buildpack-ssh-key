@@ -12,6 +12,7 @@ BUILD_DIR=$1
 VENDOR_DIR="$BUILD_DIR/vendor"
 ENV_DIR=${3:-}
 BUILDPACK_SSH_KEY="$(cat $ENV_DIR/BUILDPACK_SSH_KEY)"
+BUILDPACK_KNOWN_HOSTS="$(cat $ENV_DIR/BUILDPACK_KNOWN_HOSTS)"
 
 if [[ -z $BUILDPACK_SSH_KEY ]]; then
     echo "Did you forget to set BUILDPACK_SSH_KEY?" | indent
@@ -34,3 +35,5 @@ cat "$ENV_DIR/BUILDPACK_SSH_KEY" > $BUILD_DIR/.ssh/id_rsa
 echo >> $BUILD_DIR/.ssh/id_rsa
 chmod 600 $BUILD_DIR/.ssh/id_rsa
 echo "-----> Installed SSH key from BUILDPACK_SSH_KEY"
+echo BUILDPACK_KNOWN_HOSTS > $BUILD_DIR/.ssh/known_hosts
+echo "-----> Installed KNOWN HOSTS"
